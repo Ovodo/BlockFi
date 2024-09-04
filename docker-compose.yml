@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build:
+      context: ./frontend  # Path to your Next.js Dockerfile
+    container_name: nextjs-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - django
+
+  django:
+    build:
+      context: ./backend  # Path to your Django Dockerfile
+    container_name: django-app
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./backend/src:/app  # Mounts src folder to /app inside the container
+    environment:
+      - DEBUG=1
